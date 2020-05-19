@@ -1,0 +1,35 @@
+﻿@page "/"
+
+@inject IJSRuntime JSRuntime
+
+<div id="threejscontainer" style="width: 300px; height: 300px;"></div>
+<div>
+<button type="button" class="btn btn-primary" @onclick="Stop">
+    Stop
+</button>
+
+<button type="button" class="btn btn-primary" @onclick="Dance">
+    Dance
+</button>
+</div>
+<div id="info">
+    <a href="https://threejs.org/examples/#webgl_loader_collada_skinning" target="_blank" rel="noopener">three.js collada loader skinning example</a> <br/>
+    Dancing Stormtrooper by <a href="https://sketchfab.com/strykerdoesgames" target="_blank" rel="noopener">StrykerDoesAnimation</a>, <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC Attribution</a>
+</div>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+      await JSRuntime.InvokeVoidAsync("ThreeJSFunctions.load");
+    }
+
+    public async Task Stop()
+    {
+      await JSRuntime.InvokeVoidAsync("ThreeJSFunctions.stop");
+    }
+
+    public async Task Dance()
+    {
+      await JSRuntime.InvokeVoidAsync("ThreeJSFunctions.start");
+    }
+}
